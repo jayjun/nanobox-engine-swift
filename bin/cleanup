@@ -1,0 +1,17 @@
+#!/bin/bash
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
+
+# source the Nos framework
+. /opt/nanobox/nos/common.#!/bin/sh
+
+# initialize Nos with the original arguments
+nos_init "$@"
+
+# source common lib
+. ${engine_lib_dir}/swift.sh
+
+# Remove build dependencies to ensure the build env is small
+uninstall_build_dependencies
+
+exit 0

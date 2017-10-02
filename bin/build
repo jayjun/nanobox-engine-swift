@@ -1,0 +1,17 @@
+#!/bin/bash
+# -*- mode: bash; tab-width: 2; -*-
+# vim: ts=2 sw=2 ft=bash noet
+
+# initialize Nos with the original arguments
+nos_init "$@"
+
+# source common lib
+. ${engine_lib_dir}/swift.sh
+
+# install swift
+install_runtime_packages
+
+# fetch dependencies
+fetch_deps
+
+exit 0
