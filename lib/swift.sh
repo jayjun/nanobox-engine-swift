@@ -1,7 +1,7 @@
 # -*- mode: bash; tab-width: 2; -*-
 # vim: ts=2 sw=2 ft=bash noet
 
-# Determin the Swift runtime to install. This will first check
+# Determine the Swift runtime to install. This will first check
 # within the Boxfile, then will rely on default_runtime to
 # provide a sensible default
 runtime() {
@@ -10,13 +10,36 @@ runtime() {
 
 # Install the Swift runtime
 install_runtime_packages() {
-  pkgs=('clang') # TODO: Needs libicu-dev too
+  pkgs=('clang' 'icu')
 
   nos_install ${pkgs[@]}
 
-  wget "https://swift.org/builds/$(runtime)-release/ubuntu1404/$(runtime)-RELEASE/$(runtime)-RELEASE-ubuntu14.04.tar.gz"
-  tar xzf "$(runtime)-RELEASE-ubuntu14.04.tar.gz" -C /data/lib
-  # TODO: Add /data/lib/$(runtime)-RELEASE-ubuntu14.04/usr/bin to $PATH
+  # TODO: Replace with pkgin package
+  cd $(nos_data_dir)
+
+  wget "https://swift.org/builds/$(runtime)-release/ubuntu1604/$(runtime)-RELEASE/$(runtime)-RELEASE-ubuntu16.04.tar.gz"
+  mkdir -p "$(nos_data_dir)/lib/swift"
+  tar xzf "$(runtime)-RELEASE-ubuntu16.04.tar.gz" -C "$(nos_data_dir)/lib/swift" --strip-components=1
+  rm "$(runtime)-RELEASE-ubuntu16.04.tar.gz"
+
+  cd bin
+  ln -s ../lib/swift/usr/bin/lldb /data/bin/lldb
+  ln -s ../lib/swift/usr/bin/lldb-argdumper lldb-argdumper
+  ln -s ../lib/swift/usr/bin/lldb-mi lldb-mi
+  ln -s ../lib/swift/usr/bin/lldb-server lldb-server
+  ln -s ../lib/swift/usr/bin/lldb-server lldb-server
+  ln -s ../lib/swift/usr/bin/repl_swift repl_swift
+  ln -s ../lib/swift/usr/bin/swift swift
+  ln -s ../lib/swift/usr/bin/swift-autolink-extract swift-autolink-extract
+  ln -s ../lib/swift/usr/bin/swift-build swift-build
+  ln -s ../lib/swift/usr/bin/swift-build-tool swift-build-tool
+  ln -s ../lib/swift/usr/bin/swift-demangle swift-demangle
+  ln -s ../lib/swift/usr/bin/swift-package swift-package
+  ln -s ../lib/swift/usr/bin/swift-run swift-run
+  ln -s ../lib/swift/usr/bin/swift-test swift-test
+  ln -s ../lib/swift/usr/bin/swiftc swiftc
+
+  cd - >/dev/null
 }
 
 # Uninstall build dependencies

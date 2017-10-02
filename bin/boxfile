@@ -19,10 +19,10 @@ run.config:
     - Packages
 END
 if [[ $(grep -c build_triggers /opt/nanobox/hooks/lib/boxfile.rb) -gt 1 ]]; then
-  cat <<-END
-    build_triggers:
-      - Package.swift
-  END
+	cat <<-END
+	  build_triggers:
+	    - Package.swift
+	END
 fi
 
 exit 0

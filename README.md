@@ -59,6 +59,5 @@ run.config:
 ---
 
 ## TODO
-- Install Swift dependencies `clang` and `libicu-dev` properly
 - Add Swift binaries to $PATH properly
 - Write tests
