@@ -59,5 +59,6 @@ run.config:
 ---
 
 ## TODO
-- Add Swift binaries to $PATH properly
+- Add `icu-52` and `icu-55` to `pkgsrc`
+- Compile Swift for `pkgsrc`
 - Write tests
