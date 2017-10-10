@@ -10,7 +10,7 @@ runtime() {
 
 # Install the Swift runtime
 install_runtime_packages() {
-  pkgs=('clang' 'icu')
+  pkgs=('clang' 'icu-55' 'curl')
 
   nos_install ${pkgs[@]}
 
