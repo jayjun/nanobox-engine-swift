@@ -5,41 +5,21 @@
 # within the Boxfile, then will rely on default_runtime to
 # provide a sensible default
 runtime() {
-  echo $(nos_validate "$(nos_payload "config_runtime")" "string" "swift-4.0")
+  echo $(nos_validate \
+    "$(nos_payload "config_runtime")" \
+    "string" "$(default_runtime)")
+}
+
+# Provide a default Swift version
+default_runtime() {
+  echo "swift-4.0"
 }
 
 # Install the Swift runtime
 install_runtime_packages() {
-  pkgs=('clang' 'icu-55' 'curl' 'python-2.7')
+  pkgs=('clang' 'icu' 'curl' 'python-2.7' "$(runtime)")
 
   nos_install ${pkgs[@]}
-
-  # TODO: Replace with pkgin package
-  cd $(nos_data_dir)
-
-  wget "https://swift.org/builds/$(runtime)-release/ubuntu1604/$(runtime)-RELEASE/$(runtime)-RELEASE-ubuntu16.04.tar.gz"
-  mkdir -p "$(nos_data_dir)/lib/swift"
-  tar xzf "$(runtime)-RELEASE-ubuntu16.04.tar.gz" -C "$(nos_data_dir)/lib/swift" --strip-components=1
-  rm "$(runtime)-RELEASE-ubuntu16.04.tar.gz"
-
-  cd bin
-  ln -s ../lib/swift/usr/bin/lldb /data/bin/lldb
-  ln -s ../lib/swift/usr/bin/lldb-argdumper lldb-argdumper
-  ln -s ../lib/swift/usr/bin/lldb-mi lldb-mi
-  ln -s ../lib/swift/usr/bin/lldb-server lldb-server
-  ln -s ../lib/swift/usr/bin/lldb-server lldb-server
-  ln -s ../lib/swift/usr/bin/repl_swift repl_swift
-  ln -s ../lib/swift/usr/bin/swift swift
-  ln -s ../lib/swift/usr/bin/swift-autolink-extract swift-autolink-extract
-  ln -s ../lib/swift/usr/bin/swift-build swift-build
-  ln -s ../lib/swift/usr/bin/swift-build-tool swift-build-tool
-  ln -s ../lib/swift/usr/bin/swift-demangle swift-demangle
-  ln -s ../lib/swift/usr/bin/swift-package swift-package
-  ln -s ../lib/swift/usr/bin/swift-run swift-run
-  ln -s ../lib/swift/usr/bin/swift-test swift-test
-  ln -s ../lib/swift/usr/bin/swiftc swiftc
-
-  cd - >/dev/null
 }
 
 # Uninstall build dependencies

@@ -59,5 +59,4 @@ run.config:
 ---
 
 ## TODO
-- Compile Swift for `pkgsrc`
 - Write tests
